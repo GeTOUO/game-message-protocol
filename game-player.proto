@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+package com.game.message;
+
+message
+

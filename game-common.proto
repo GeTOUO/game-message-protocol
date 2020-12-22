@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package com.game.message;
+
+import "google/protobuf/any.proto";
+
+/**
+ * 消息包装器
+ */
+message MessageWrapper {
+    string uuid = 1; // 标识一个消息的唯一性
+
+    google.protobuf.Any content = 3; // 响应数据;
+
+}
+
+/**
+ * 服务状态码
+ */
+enum ServiceStatus {
+    SUCCESS = 0;
+
+
+    PARAM_ERROR = 100; // 参数错误: 前端可验证的部分发生了错误
+    DATA_RULE_ERROR = 101; // 参数数据规则错误
+    DATA_RELATION_ERROR = 102; // 参数数据关系错误
+    ACTION_NOT_SUPPORT_ERROR = 103; // 不支持的操作类型
+
+
+    SOURCE_ACCESS_ERROR = 200; // 资源不可用
+    SOURCE_NOT_FOUND_ERROR = 201; // 资源找不到
+
+
+    CREATE_REPEAT_ERROR = 301; // 创建资源重复
+
+    CREDENTIALS_ERROR = 390; // 凭证错误
+    AUTHORIZED_ERROR = 400; // 认证发生错误...
+    NO_AUTHENTICATION_ERROR = 401; // 未认证, 无凭证, 凭证无效
+    CREDENTIALS_EXPIRED_ERROR = 402; // 凭证超时
+    UNAUTHORIZED_ERROR = 403; // 无权限, 请求了未授权的资源时
+    LOGIN_KICK_OUT_ERROR = 407; // 登录踢出
+    SUBJECT_PRINCIPAL_ERROR = 411; // 无法获取有效的主体身份信息
+    SUBJECT_DISABLE_ERROR = 412; // 主体被禁用
+
+
+    SERVER_ERROR = 500; // 服务器未知错误
+
+
+    OTHER_SERVER_ERROR = 600; // 远程服务器未知错误
+}
+
+/**
+ * 服务状态事件
+ * 用于通知客户端操作成功或失败的原因
+ * 在出现其它异常时, 也可能收到该消息(比如在不允许多地登录的配置时被挤下线)
+ */
+message ServiceStatusEvent {
+    int32 uuid = 1;
+    int64 timestamp = 2;
+    string reason = 3;
+    ServiceStatus status = 4;
+}
+
+/**
+ * 重连恢复状态
+ */
+message ReStateOnConnection {
+    string authorization = 1; // token
+    ClientDevice client = 2; // 当前设备
+}
+
+/**
+ * 客户端设备信息
+ */
+message ClientDevice {
+    string mac = 1; // 设备mac
+    string client_id = 2; // 设备唯一id
+    string client_infos = 3; // 设备信息: 支持json格式
+}
