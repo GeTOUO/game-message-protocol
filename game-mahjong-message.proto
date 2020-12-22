@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package com.game.message;
+
+import "model/game-mahjong-model.proto";
+
+/**
+ * 创建游戏
+ */
+message CreateMahjongGame {
+    MahjongGameSetting setting = 1;
+}
+
+message JoinMahjongGame {
+    string room_id = 1; // 游戏房间id
+
+}

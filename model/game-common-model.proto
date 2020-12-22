@@ -2,18 +2,6 @@ syntax = "proto3";
 
 package com.game.message;
 
-import "google/protobuf/any.proto";
-
-/**
- * 消息包装器
- */
-message MessageWrapper {
-    string uuid = 1; // 标识一个消息的唯一性
-
-    google.protobuf.Any content = 3; // 响应数据;
-
-}
-
 /**
  * 服务状态码
  */
@@ -47,26 +35,6 @@ enum ServiceStatus {
 
 
     OTHER_SERVER_ERROR = 600; // 远程服务器未知错误
-}
-
-/**
- * 服务状态事件
- * 用于通知客户端操作成功或失败的原因
- * 在出现其它异常时, 也可能收到该消息(比如在不允许多地登录的配置时被挤下线)
- */
-message ServiceStatusEvent {
-    int32 uuid = 1;
-    int64 timestamp = 2;
-    string reason = 3;
-    ServiceStatus status = 4;
-}
-
-/**
- * 重连恢复状态
- */
-message ReStateOnConnection {
-    string authorization = 1; // token
-    ClientDevice client = 2; // 当前设备
 }
 
 /**

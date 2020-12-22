@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package com.game.message;
+
+/**
+ * 申请手机验证码
+ *
+ * 用途
+ *
+ */
+message ApplyPhoneSmsCode {
+   string phone = 1;        // 手机号
+   string purpose = 2;      // 用途
+}
+
+message LogInByPhoneSms {
+    string phone = 1;       // 手机号
+    string sms_code = 2;    // 短信码
+}

@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package com.game.message;
+
+import "google/protobuf/any.proto";
+
+/**
+ * 麻将类型
+ */
+enum MahjongDialect {
+    SICHUAN_CHENGDU_MAHJONG = 0; // 四川:成都麻将
+}
+
+/**
+ * 四川:成都麻将牌局规则
+ */
+message GameRulesSichuanChengduMahjong {
+    bool enable_rain = 1;               // 下雨
+    bool enable_blow = 2;               // 吹风
+    bool fight_to_the_bitter_end = 3;   // 血战到底
+}
+
+/**
+ * 麻将游戏参数
+ */
+message MahjongGameSetting {
+    MahjongDialect dialect = 1;             // 麻将地区
+    int32 base_coin = 2;                    // 基础分
+    google.protobuf.Any game_rules = 3;     // 规则;
+
+}
